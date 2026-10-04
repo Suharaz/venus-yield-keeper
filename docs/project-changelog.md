@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.0 - 2026-10-04
+- Third agent: Venus Rate Router (ERC-8004 #2556, HelloFugu REBALANCING listing 25, Pokter Rebalancing, Souk requested). Routes BNB across Venus Core vBNB, Core vWBNB and the Liquid Staked BNB pool vWBNB by supply APY with per-market caps (60% of capital, cash / 3, supply cap) and hysteresis (3 APY points for 15 min, 1 point while hired).
+
 ## 0.2.1 - 2026-10-04
 - KV documents (`state`, `jobs`) are written only when they changed (`src/shared/kv-doc.ts`). Hold cycles now cost no KV write; before, two Workers on a 5-min cron wrote ~1152 times/day, above the Workers Free cap of 1000 writes/day, which would have stopped cycles and risked losing a pending payout record.
 

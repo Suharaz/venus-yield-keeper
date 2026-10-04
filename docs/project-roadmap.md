@@ -5,6 +5,7 @@
 - [x] ERC-8004 register (agentId 2554) + setAgentWallet; set AGENT_ID
 - [x] List on HelloFugu (listing 23); set LISTING_ID
 - [x] Treasury agent (agentId 2555, HelloFugu TREASURY listing 24, https://runway-treasurer.minesuhara.workers.dev), funded 0.08 tBNB
+- [x] Rebalancing agent Venus Rate Router (agentId 2556, HelloFugu REBALANCING listing 25, Pokter category Rebalancing, Souk requested, https://venus-rate-router.minesuhara.workers.dev), funded 0.05 tBNB
 - [x] ERC-8183 provider (Pokter quotes, delivery, settle); Pokter enrolled for both agents
 - [x] Agent Souk listing requests + delivery probes for both agents
 - [ ] Agent Souk shelf admission (human review)

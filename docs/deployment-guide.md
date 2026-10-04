@@ -1,6 +1,6 @@
 # Deployment Guide
 
-Per agent (`yield` uses `wrangler.jsonc`, `treasury` uses `wrangler.treasury.jsonc`; scripts take the agent as first arg):
+Per agent (`yield` uses `wrangler.jsonc`, `treasury` uses `wrangler.treasury.jsonc`, `router` uses `wrangler.router.jsonc`; scripts take the agent as first arg):
 
 1. `npm install && npm run keygen -- <agent>` (prints the agent wallet address; key in `.dev.vars`).
 2. Create the KV namespace and put its id in the wrangler config; `npx wrangler deploy --config <file>`.
@@ -13,4 +13,4 @@ Per agent (`yield` uses `wrangler.jsonc`, `treasury` uses `wrangler.treasury.jso
 9. Verify: dashboard renders, `/status` shows `agentWallet`, Pokter checks all pass.
 
 Deployed without a Wrangler login through the Cloudflare API (multipart `PUT /workers/scripts/<name>` with `kv_namespace`, `plain_text` vars and `secret_text AGENT_PRIVATE_KEY` bindings, then `/schedules` and `/subdomain`). A script PUT replaces all bindings: always resend the secret.
-Keep both Workers running until after 13 Nov 2026 (campaign review window).
+Keep all three Workers running until after 13 Nov 2026 (campaign review window).

@@ -11,5 +11,7 @@
 | `src/shared/config.ts` | Testnet addresses, ABIs, `BaseEnv`, explorer/repo URLs |
 | `src/yield/` | Venus Yield Keeper: `strategy.ts` (pure `decide`), `agent.ts` (cycle, report), `index.ts` (profile, dashboard sections) |
 | `src/treasury/` | Runway Treasurer: `policy.ts` (pure `decideTreasury`), `agent.ts` (nonce-guarded cycle, report), `index.ts` (profile, sections) |
-| `scripts/env.ts` | Agent selector (`yield` / `treasury` first arg), per-agent variable prefix, owner/agent clients |
+| `src/router/` | Venus Rate Router: `policy.ts` (pure `planRouter`: capacity, hysteresis ranking, one step per cycle), `agent.ts` (3 Venus BNB markets, wrap/approve/mint/redeem, nonce-guarded pending, soft-fail check via vToken balance), `index.ts` (profile, sections) |
+| `src/shared/kv-doc.ts` | `loadDoc`: KV JSON document written only when it changed |
+| `scripts/env.ts` | Agent selector (`yield` / `treasury` / `router` first arg), per-agent variable prefix, owner/agent clients |
 | `scripts/keygen.ts`, `register.ts`, `list-hellofugu.ts` | Wallet creation, ERC-8004 `register` + `setAgentWallet` (EIP-712), `FuguRegistry.list`/`updateListing` |

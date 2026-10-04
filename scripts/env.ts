@@ -10,12 +10,13 @@ const devVars = existsSync(".dev.vars") ? parse(readFileSync(".dev.vars")) : {};
 
 /**
  * Which agent a script acts on: first CLI arg, default "yield" (`npm run register -- treasury`).
- * Per-agent variables carry the prefix: AGENT_PRIVATE_KEY (yield), TREASURY_AGENT_PRIVATE_KEY (treasury).
- * category = FuguRegistry Category enum (2 YIELD, 8 TREASURY).
+ * Per-agent variables carry the prefix: AGENT_PRIVATE_KEY (yield), TREASURY_AGENT_PRIVATE_KEY (treasury),
+ * ROUTER_AGENT_PRIVATE_KEY (router). category = FuguRegistry Category enum (0 REBALANCING, 2 YIELD, 8 TREASURY).
  */
 const AGENTS = {
   yield: { prefix: "", category: 2 },
   treasury: { prefix: "TREASURY_", category: 8 },
+  router: { prefix: "ROUTER_", category: 0 },
 } as const;
 export type AgentName = keyof typeof AGENTS;
 

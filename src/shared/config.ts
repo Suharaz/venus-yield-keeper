@@ -9,6 +9,11 @@ export const ADDR = {
   venusComptroller: "0x94d1820b2D1c7c7452A163983Dc888CEC546b77D",
   fuguRegistry: "0xb2f36070E6eae3353E8e755172B477DF213ae248",
   fuguSubscription: "0xfdb083371f44Cf53181350389D3217e51B431776",
+  wbnb: "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+  vWBNBCore: "0xd9E77847ec815E56ae2B9E69596C69b6972b0B1C",
+  /** Venus isolated pool "Liquid Staked BNB" (PoolRegistry 0xC85491616Fa949E048F3aAc39fbf5b0703800667). */
+  lstComptroller: "0x596B11acAACF03217287939f88d63b51d3771704",
+  vWBNBLst: "0x231dED0Dfc99634e52EE1a1329586bc970d773b3",
 } as const satisfies Record<string, Address>;
 
 /** BSC testnet ~0.45 s blocks -> 365 * 86400 / 0.45. Venus core pool rates are per block. */
@@ -23,8 +28,29 @@ export const vBnbAbi = parseAbi([
   "function supplyRatePerBlock() view returns (uint256)",
 ]);
 
+/** Venus market for an ERC-20 underlying (core pool returns error codes, isolated pools revert). */
+export const vErc20Abi = parseAbi([
+  "function mint(uint256 mintAmount) returns (uint256)",
+  "function redeem(uint256 redeemTokens) returns (uint256)",
+  "function redeemUnderlying(uint256 redeemAmount) returns (uint256)",
+  "function balanceOf(address owner) view returns (uint256)",
+  "function exchangeRateCurrent() returns (uint256)",
+  "function supplyRatePerBlock() view returns (uint256)",
+  "function getCash() view returns (uint256)",
+  "function totalSupply() view returns (uint256)",
+]);
+
+export const wbnbAbi = parseAbi([
+  "function deposit() payable",
+  "function withdraw(uint256 wad)",
+  "function balanceOf(address owner) view returns (uint256)",
+  "function allowance(address owner, address spender) view returns (uint256)",
+  "function approve(address spender, uint256 amount) returns (bool)",
+]);
+
 export const comptrollerAbi = parseAbi([
   "function actionPaused(address market, uint8 action) view returns (bool)",
+  "function supplyCaps(address market) view returns (uint256)",
 ]);
 
 export const fuguSubscriptionAbi = parseAbi([

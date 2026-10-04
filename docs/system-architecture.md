@@ -8,6 +8,7 @@ flowchart LR
   Jobs --> Cycle[agent runCycle]
   Cycle -->|subCount/getSub/claim| Fugu[HelloFugu FuguSubscription]
   Cycle -->|mint/redeemUnderlying/redeem| Venus[Venus vBNB]
+  Cycle -->|wrap/approve/mint/redeem| VenusW[Venus vWBNB Core + Liquid Staked BNB pool]
   Cycle -->|payout transfer| Payee[Payee wallets]
   Cycle <--> KV[(KV state, jobs, deliverables)]
   Buyer[Pokter / SDK buyer] -->|negotiate, notify_funded| A2A[Worker /a2a]
@@ -16,7 +17,7 @@ flowchart LR
   Registry[ERC-8004 IdentityRegistry] -.agentURI.-> A2A
 ```
 
-Two Workers share `src/shared` and differ only in the `AgentModule` (profile, cycle, report, dashboard sections).
+Three Workers share `src/shared` and differ only in the `AgentModule` (profile, cycle, report, dashboard sections).
 KV keys per Worker: `state` (agent cycle: hires, ledger, pending tx, principal, payouts), `jobs` (ERC-8183 cursor and job records), `deliverable:<jobId>` (manifest text).
 The cron is the only writer of state and the only sender of transactions; HTTP handlers are read-only (quotes are signatures, not transactions), so nonces never race.
 Active hires = unfinished HelloFugu subscriptions + FUNDED/SUBMITTED ERC-8183 jobs.

@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "venus-rate-router",
+  "main": "src/router/index.ts",
+  "compatibility_date": "2026-10-04",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  // Every 5 minutes: complete finished HelloFugu hires, re-rank the Venus BNB markets, take at most one step.
+  "triggers": { "crons": ["*/5 * * * *"] },
+  "kv_namespaces": [{ "binding": "STATE", "id": "d87ad374433e4934aef42c6656714693" }],
+  "vars": {
+    "RPC_URL": "https://bsc-testnet-rpc.publicnode.com",
+    // Fill after `npm run register -- router` / `npm run list:hellofugu -- router`.
+    "AGENT_ID": "2556",
+    "LISTING_ID": "25",
+    "PUBLIC_URL": "https://venus-rate-router.minesuhara.workers.dev",
+    // Routing parameters (wei strings / basis points / seconds).
+    "GAS_RESERVE_WEI": "10000000000000000",
+    "MAX_SHARE_BPS": "6000",
+    "HURDLE_BPS": "300",
+    "ACTIVE_HURDLE_BPS": "100",
+    "CONFIRM_SEC": "900",
+    "MIN_APY_BPS": "100",
+    "BAND_BPS": "500",
+    "MIN_MOVE_WEI": "2000000000000000",
+    "EXIT_CASH_MULTIPLE": "3"
+  }
+  // Secret (not in this file): AGENT_PRIVATE_KEY = the router agent wallet key (ROUTER_AGENT_PRIVATE_KEY in .dev.vars).
+}
