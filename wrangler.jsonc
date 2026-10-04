@@ -11,8 +11,8 @@
   "vars": {
     "RPC_URL": "https://bsc-testnet-rpc.publicnode.com",
     // Fill after `npm run register` / `npm run list:hellofugu`; empty = not yet registered/listed.
-    "AGENT_ID": "",
-    "LISTING_ID": "",
+    "AGENT_ID": "2554",
+    "LISTING_ID": "23",
     // Strategy parameters (basis points / wei strings).
     "MIN_APY_BPS": "100",
     "BASE_TARGET_BPS": "5000",

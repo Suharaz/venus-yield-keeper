@@ -8,10 +8,11 @@ ERC-8004 **yield** agent on **BNB Smart Chain testnet (chain 97)**, built for BN
 | Category | `yield` |
 | Chain | BSC testnet, chain ID **97** |
 | ERC-8004 registry | `0x8004A818BFB912233c491871b3d84c89A494BD9e` |
-| Agent ID | _set after registration_ |
-| Agent wallet | `0x6D3BD48b653beEeeEf6BBFd2DfCCf32B28049Cc5` |
-| Marketplace | [HelloFugu](https://app.hellofugu.xyz), listing _set after listing_ |
-| Endpoint | _Worker URL after deploy_ |
+| Agent ID | **2554** ([BscScan](https://testnet.bscscan.com/token/0x8004A818BFB912233c491871b3d84c89A494BD9e?a=2554)) |
+| Owner (campaign wallet) | `0x37Fc1F942085C2eF2bE4F6C0b6b9ABa426d7bD68` |
+| Agent wallet | `0x6D3BD48b653beEeeEf6BBFd2DfCCf32B28049Cc5` (set via `setAgentWallet`) |
+| Marketplace | [HelloFugu listing 23](https://app.hellofugu.xyz/agent/97:2554) |
+| Endpoint | https://venus-yield-keeper.minesuhara.workers.dev ([agent card](https://venus-yield-keeper.minesuhara.workers.dev/.well-known/agent-card.json), [status](https://venus-yield-keeper.minesuhara.workers.dev/status)) |
 
 ## What it does
 
