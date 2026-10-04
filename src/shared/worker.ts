@@ -4,6 +4,7 @@ import { clients } from "./chain";
 import { ADDR, CHAIN_ID, EXPLORER, identityRegistryAbi, REPO_URL, type BaseEnv } from "./config";
 import { activeJobCount, checkJob, negotiate, syncJobs, type JobBook, type NegotiateRequest, type ProviderIdentity } from "./erc8183";
 import type { ActionRecord } from "./hires";
+import { loadDoc } from "./kv-doc";
 import { renderPage } from "./page";
 import type { PageLink, PageModel } from "./page-model";
 
@@ -148,7 +149,8 @@ async function pageModel<E extends BaseEnv, R extends AgentReport>(m: AgentModul
 
 /** Cron: serve ERC-8183 jobs first (deliver/settle), then the agent's own cycle. Sequential, so nonces never race. */
 async function scheduledCycle<E extends BaseEnv, R extends AgentReport>(m: AgentModule<E, R>, env: E) {
-  const jobs = await loadJobs(env);
+  const doc = await loadDoc<JobBook>(env.STATE, JOBS_KEY, {});
+  const jobs = doc.value;
   try {
     const c = clients(env);
     await syncJobs(jobs, identity(m.profile, env, c.account.address), c, env.STATE, env.PUBLIC_URL, Math.floor(Date.now() / 1000), async (task) => {
@@ -158,7 +160,7 @@ async function scheduledCycle<E extends BaseEnv, R extends AgentReport>(m: Agent
   } catch (err) {
     console.error("job sync failed", err);
   } finally {
-    await env.STATE.put(JOBS_KEY, JSON.stringify(jobs));
+    await doc.save(); // only when a job or the cursor changed
   }
   return m.runCycle(env, activeJobCount(jobs));
 }

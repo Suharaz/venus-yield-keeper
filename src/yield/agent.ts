@@ -3,6 +3,7 @@ import { clients, readVenus, type Clients, type VenusView } from "../shared/chai
 import { ADDR, vBnbAbi, type BaseEnv } from "../shared/config";
 import { fmtBps } from "../shared/format";
 import { activeHireCount, pushAction, syncHires, type ActionRecord, type HireBook } from "../shared/hires";
+import { loadDoc } from "../shared/kv-doc";
 import type { AgentReport } from "../shared/worker";
 import { decide, targetBps, type Decision, type StrategyParams } from "./strategy";
 
@@ -116,8 +117,9 @@ function snapshot(state: YieldState, market: VenusView, nowSec: number, jobHires
 
 /** One scheduled cycle: complete hires, then apply at most one yield action. State is saved even if a step throws. */
 export async function runCycle(env: YieldEnv, jobHires: number): Promise<{ decision: Decision; txHash: Hash | null }> {
-  const state = await loadState(env);
-  const saveState = () => env.STATE.put(STATE_KEY, JSON.stringify(state));
+  const doc = await loadDoc(env.STATE, STATE_KEY, EMPTY_STATE);
+  const state = doc.value;
+  const saveState = doc.save; // writes only when the state changed (hold cycles cost no KV write)
   const c = clients(env);
   const nowSec = Math.floor(Date.now() / 1000);
 

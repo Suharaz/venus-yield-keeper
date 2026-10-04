@@ -3,6 +3,7 @@ import { clients, readVenus, type Clients, type VenusView } from "../shared/chai
 import { ADDR, vBnbAbi, type BaseEnv } from "../shared/config";
 import { fmtBps } from "../shared/format";
 import { activeHireCount, pushAction, syncHires, type ActionRecord, type HireBook } from "../shared/hires";
+import { loadDoc } from "../shared/kv-doc";
 import type { AgentReport } from "../shared/worker";
 import { dailyOutflowWei, decideTreasury, reserveTargetWei, type Payee, type TreasuryDecision, type TreasuryParams } from "./policy";
 
@@ -145,8 +146,9 @@ function prunePaid(state: TreasuryState, nowSec: number) {
 
 /** One scheduled cycle: complete hires, settle the last tx, then take at most one treasury action. */
 export async function runCycle(env: TreasuryEnv, jobHires: number): Promise<{ decision: TreasuryDecision; txHash: Hash | null }> {
-  const state = await loadState(env);
-  const saveState = () => env.STATE.put(STATE_KEY, JSON.stringify(state));
+  const doc = await loadDoc(env.STATE, STATE_KEY, EMPTY_STATE);
+  const state = doc.value;
+  const saveState = doc.save; // writes only when the state changed (hold cycles cost no KV write)
   const c = clients(env);
   const nowSec = Math.floor(Date.now() / 1000);
 

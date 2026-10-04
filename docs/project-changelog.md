@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.1 - 2026-10-04
+- KV documents (`state`, `jobs`) are written only when they changed (`src/shared/kv-doc.ts`). Hold cycles now cost no KV write; before, two Workers on a 5-min cron wrote ~1152 times/day, above the Workers Free cap of 1000 writes/day, which would have stopped cycles and risked losing a pending payout record.
+
 ## 0.2.0 - 2026-10-04
 - Second agent: Runway Treasurer (ERC-8004 #2555, HelloFugu TREASURY listing 24): daily payouts paid exactly once (payout key + nonce-guarded drop detection), liquid reserve sized from payouts and active hires, idle surplus swept into Venus vBNB.
 - Repo split into `src/shared`, `src/yield`, `src/treasury`; one Worker factory (`createWorker`) for both; scripts take the agent as first arg.
