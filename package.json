@@ -1,0 +1,27 @@
+{
+  "name": "venus-yield-keeper",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ERC-8004 yield agent on BNB Smart Chain testnet: keeps BNB supplied to Venus by rule, harvests interest, completes HelloFugu hires.",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --test-scheduled",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "keygen": "tsx scripts/keygen.ts",
+    "register": "tsx scripts/register.ts",
+    "list:hellofugu": "tsx scripts/list-hellofugu.ts"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "viem": "^2.57.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261004.1",
+    "@types/node": "^26.6.4",
+    "dotenv": "^18.0.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.147.0"
+  }
+}

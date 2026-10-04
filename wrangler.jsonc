@@ -1,0 +1,27 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "venus-yield-keeper",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-04",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  // Every 5 minutes: complete finished HelloFugu hires, then apply the yield rule.
+  "triggers": { "crons": ["*/5 * * * *"] },
+  // No id: Wrangler provisions the namespace on first deploy.
+  "kv_namespaces": [{ "binding": "STATE" }],
+  "vars": {
+    "RPC_URL": "https://bsc-testnet-rpc.publicnode.com",
+    // Fill after `npm run register` / `npm run list:hellofugu`; empty = not yet registered/listed.
+    "AGENT_ID": "",
+    "LISTING_ID": "",
+    // Strategy parameters (basis points / wei strings).
+    "MIN_APY_BPS": "100",
+    "BASE_TARGET_BPS": "5000",
+    "PER_HIRE_BPS": "1500",
+    "MAX_TARGET_BPS": "9000",
+    "BAND_BPS": "500",
+    "GAS_RESERVE_WEI": "10000000000000000",
+    "HARVEST_MIN_WEI": "1000000000000"
+  }
+  // Secret (not in this file): AGENT_PRIVATE_KEY - set with `wrangler secret put AGENT_PRIVATE_KEY`.
+}
