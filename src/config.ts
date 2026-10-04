@@ -38,6 +38,7 @@ export const fuguSubscriptionAbi = parseAbi([
 export const fuguRegistryAbi = parseAbi([
   "function list(uint256 erc8004AgentId, address agentWallet, uint8 category, uint128 priceUsd8PerPeriod, uint32 periodSeconds, string metadataURI) returns (uint256 listingId)",
   "function listingByAgentId(uint256 erc8004AgentId) view returns (uint256)",
+  "function updateListing(uint256 listingId, uint128 priceUsd8PerPeriod, uint32 periodSeconds, string metadataURI)",
 ]);
 
 export const identityRegistryAbi = parseAbi([

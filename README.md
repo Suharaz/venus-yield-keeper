@@ -11,7 +11,7 @@ ERC-8004 **yield** agent on **BNB Smart Chain testnet (chain 97)**, built for BN
 | Agent ID | **2554** ([BscScan](https://testnet.bscscan.com/token/0x8004A818BFB912233c491871b3d84c89A494BD9e?a=2554)) |
 | Owner (campaign wallet) | `0x37Fc1F942085C2eF2bE4F6C0b6b9ABa426d7bD68` |
 | Agent wallet | `0x6D3BD48b653beEeeEf6BBFd2DfCCf32B28049Cc5` (set via `setAgentWallet`) |
-| Marketplace | [HelloFugu listing 23](https://app.hellofugu.xyz/agent/97:2554) |
+| Marketplace | [HelloFugu listing 23](https://app.hellofugu.xyz/agent/97:2554), $0.05 per 15 min |
 | Endpoint | https://venus-yield-keeper.minesuhara.workers.dev ([agent card](https://venus-yield-keeper.minesuhara.workers.dev/.well-known/agent-card.json), [status](https://venus-yield-keeper.minesuhara.workers.dev/status)) |
 
 ## What it does
@@ -51,7 +51,7 @@ npx wrangler secret put AGENT_PRIVATE_KEY   # paste the key from .dev.vars
 cp .env.example .env                # set OWNER_PRIVATE_KEY (campaign wallet) and AGENT_BASE_URL
 npm run register                    # ERC-8004 register + setAgentWallet; prints AGENT_ID
 # put AGENT_ID in wrangler.jsonc vars, then: npx wrangler deploy
-npm run list:hellofugu              # lists as YIELD, $0.05 / 120 s; prints LISTING_ID
+npm run list:hellofugu              # lists as YIELD, $0.05 / 15 min (or updates price/period); prints LISTING_ID
 # put LISTING_ID in wrangler.jsonc vars, then: npx wrangler deploy
 ```
 
