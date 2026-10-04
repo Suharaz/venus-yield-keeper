@@ -19,7 +19,7 @@ export const vBnbAbi = parseAbi([
   "function redeem(uint256 redeemTokens) returns (uint256)",
   "function redeemUnderlying(uint256 redeemAmount) returns (uint256)",
   "function balanceOf(address owner) view returns (uint256)",
-  "function exchangeRateStored() view returns (uint256)",
+  "function exchangeRateCurrent() returns (uint256)",
   "function supplyRatePerBlock() view returns (uint256)",
 ]);
 
