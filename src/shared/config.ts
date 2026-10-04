@@ -51,17 +51,18 @@ export const identityRegistryAbi = parseAbi([
   "event Registered(uint256 indexed agentId, string agentURI, address indexed owner)",
 ]);
 
-export interface Env {
+/** Bindings every agent Worker has. Agent-specific parameters extend this. */
+export interface BaseEnv {
   STATE: KVNamespace;
   AGENT_PRIVATE_KEY: string;
   RPC_URL: string;
+  /** ERC-8004 agentId; empty until registered. */
   AGENT_ID: string;
+  /** HelloFugu listing id; empty until listed. */
   LISTING_ID: string;
-  MIN_APY_BPS: string;
-  BASE_TARGET_BPS: string;
-  PER_HIRE_BPS: string;
-  MAX_TARGET_BPS: string;
-  BAND_BPS: string;
-  GAS_RESERVE_WEI: string;
-  HARVEST_MIN_WEI: string;
+  /** Public https origin of this Worker (cron has no request URL; used for deliverable links). */
+  PUBLIC_URL: string;
 }
+
+export const EXPLORER = "https://testnet.bscscan.com";
+export const REPO_URL = "https://github.com/Suharaz/venus-yield-keeper";

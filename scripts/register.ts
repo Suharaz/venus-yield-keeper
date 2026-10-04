@@ -1,11 +1,11 @@
 /**
  * 1. register(agentURI) on the ERC-8004 IdentityRegistry (BSC testnet) from the campaign wallet.
  * 2. setAgentWallet(agentId, agent wallet) with the agent wallet's EIP-712 consent signature.
- * Re-running with AGENT_ID set skips step 1.
+ * Re-running with <PREFIX>AGENT_ID set skips step 1. Usage: `npm run register -- [yield|treasury]`.
  */
 import { parseEventLogs } from "viem";
-import { ADDR, CHAIN_ID, identityRegistryAbi } from "../src/config";
-import { agentAccount, baseUrl, ownerClient, publicClient } from "./env";
+import { ADDR, CHAIN_ID, identityRegistryAbi } from "../src/shared/config";
+import { agentAccount, agentConfig, agentVar, baseUrl, ownerClient, publicClient } from "./env";
 
 const owner = ownerClient();
 const agent = agentAccount();
@@ -16,8 +16,9 @@ const card = await fetch(agentURI);
 if (!card.ok) throw new Error(`${agentURI} returned ${card.status}: deploy the Worker first`);
 
 let agentId: bigint;
-if (process.env.AGENT_ID) {
-  agentId = BigInt(process.env.AGENT_ID);
+const existingId = agentVar("AGENT_ID", true);
+if (existingId) {
+  agentId = BigInt(existingId);
   console.log(`Using existing agentId ${agentId}`);
 } else {
   const hash = await owner.writeContract({ ...registry, functionName: "register", args: [agentURI] });
@@ -51,5 +52,5 @@ if (current.toLowerCase() === agent.address.toLowerCase()) {
   console.log(`agentWallet set to ${agent.address} tx ${hash}`);
 }
 
-console.log(`\nNext: put "AGENT_ID": "${agentId}" in wrangler.jsonc vars, redeploy, then run npm run list:hellofugu`);
+console.log(`\nNext: set "AGENT_ID": "${agentId}" in the Worker vars (${agentConfig.prefix}AGENT_ID in .env), redeploy, then run list:hellofugu`);
 console.log(`Explorer: https://testnet.bscscan.com/token/${ADDR.identityRegistry}?a=${agentId}`);

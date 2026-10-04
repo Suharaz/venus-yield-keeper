@@ -1,12 +1,14 @@
 {
   "name": "venus-yield-keeper",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "ERC-8004 yield agent on BNB Smart Chain testnet: keeps BNB supplied to Venus by rule, harvests interest, completes HelloFugu hires.",
+  "description": "Two ERC-8004 agents on BNB Smart Chain testnet: Venus Yield Keeper (yield) and Runway Treasurer (treasury), listed on HelloFugu, Pokter (ERC-8183) and Agent Souk.",
   "type": "module",
   "scripts": {
     "dev": "wrangler dev --test-scheduled",
+    "dev:treasury": "wrangler dev --test-scheduled --config wrangler.treasury.jsonc",
     "deploy": "wrangler deploy",
+    "deploy:treasury": "wrangler deploy --config wrangler.treasury.jsonc",
     "typecheck": "tsc --noEmit",
     "keygen": "tsx scripts/keygen.ts",
     "register": "tsx scripts/register.ts",

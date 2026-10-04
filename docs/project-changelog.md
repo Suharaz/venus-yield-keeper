@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0 - 2026-10-04
+- Second agent: Runway Treasurer (ERC-8004 #2555, HelloFugu TREASURY listing 24): daily payouts paid exactly once (payout key + nonce-guarded drop detection), liquid reserve sized from payouts and active hires, idle surplus swept into Venus vBNB.
+- Repo split into `src/shared`, `src/yield`, `src/treasury`; one Worker factory (`createWorker`) for both; scripts take the agent as first arg.
+- ERC-8183 provider for Pokter / BNB Agent SDK buyers: signed `negotiate` quotes, `notify_funded`, cron delivery (`submit` with a KV-stored canonical manifest at `/deliverables/:jobId`) and `router.settle` after the dispute window. Funded jobs count as active hires.
+- Live HTML dashboard at `GET /` (identity, metrics, allocation, risk gates, policy, action ledger with tx links).
+- Marketplaces: Pokter enrolled (all checks pass, quote 0.10 $U); Agent Souk listing requested, delivery probes passed.
+
 ## 0.1.2 - 2026-10-04
 - HelloFugu listing 23 period 120 s -> 900 s ($0.05 per 15 min) so every hire spans at least two 5-min cycles: supply when seen active, withdraw after it ends. `list:hellofugu` now updates price/period on an existing listing.
 

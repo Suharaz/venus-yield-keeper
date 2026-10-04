@@ -13,6 +13,8 @@
  *   4. otherwise                                -> hold
  */
 
+import { fmtBps } from "../shared/format";
+
 export interface StrategyParams {
   minApyBps: bigint;
   baseTargetBps: bigint;
@@ -89,8 +91,4 @@ export function decide(p: StrategyParams, s: Snapshot): Decision {
   }
 
   return { kind: "hold", targetWei, reason: `within ${fmtBps(p.bandBps)} band of target ${fmtBps(tBps)}; nothing to harvest yet` };
-}
-
-export function fmtBps(bps: bigint): string {
-  return `${(Number(bps) / 100).toFixed(2)}%`;
 }

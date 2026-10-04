@@ -1,15 +1,16 @@
-/** Creates the agent wallet (wallet B) once. The key stays in .dev.vars (gitignored); only the address is printed. */
-import { existsSync, readFileSync, appendFileSync } from "node:fs";
-import { parse } from "dotenv";
+/** Creates an agent wallet once (`npm run keygen -- treasury`). The key stays in .dev.vars (gitignored); only the address is printed. */
+import { appendFileSync } from "node:fs";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import type { Hex } from "viem";
+import { agentConfig, agentVar } from "./env";
 
-const existing = existsSync(".dev.vars") ? parse(readFileSync(".dev.vars")).AGENT_PRIVATE_KEY : undefined;
+const name = `${agentConfig.prefix}AGENT_PRIVATE_KEY`;
+const existing = agentVar("AGENT_PRIVATE_KEY", true);
 if (existing) {
   console.log(`Agent wallet already exists: ${privateKeyToAccount(existing as Hex).address}`);
 } else {
   const key = generatePrivateKey();
-  appendFileSync(".dev.vars", `AGENT_PRIVATE_KEY=${key}\n`);
+  appendFileSync(".dev.vars", `${name}=${key}\n`);
   console.log(`Agent wallet created: ${privateKeyToAccount(key).address}`);
-  console.log("Key saved to .dev.vars. Upload it to the Worker with: npx wrangler secret put AGENT_PRIVATE_KEY");
+  console.log(`Key saved to .dev.vars as ${name}. Upload it to the Worker as the AGENT_PRIVATE_KEY secret.`);
 }

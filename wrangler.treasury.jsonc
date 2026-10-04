@@ -1,0 +1,27 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "runway-treasurer",
+  "main": "src/treasury/index.ts",
+  "compatibility_date": "2026-10-04",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  // Every 5 minutes: complete finished HelloFugu hires, then apply the treasury policy.
+  "triggers": { "crons": ["*/5 * * * *"] },
+  "kv_namespaces": [{ "binding": "STATE", "id": "7dd3ee6a2f854f6ca12544c12eb86930" }],
+  "vars": {
+    "RPC_URL": "https://bsc-testnet-rpc.publicnode.com",
+    // Fill after `npm run register` / `npm run list:hellofugu` with AGENT=treasury.
+    "AGENT_ID": "2555",
+    "LISTING_ID": "24",
+    "PUBLIC_URL": "https://runway-treasurer.minesuhara.workers.dev",
+    // Policy parameters (wei strings / basis points).
+    "FLOOR_WEI": "10000000000000000",
+    "RUNWAY_DAYS": "7",
+    "PER_HIRE_RESERVE_WEI": "10000000000000000",
+    "BAND_BPS": "2000",
+    "MIN_APY_BPS": "100",
+    // Daily payouts: gas budget for the Venus Yield Keeper agent wallet.
+    "PAYEES": "[{\"label\":\"Venus Yield Keeper gas budget\",\"to\":\"0x6D3BD48b653beEeeEf6BBFd2DfCCf32B28049Cc5\",\"amountWei\":\"2000000000000000\"}]"
+  }
+  // Secret (not in this file): AGENT_PRIVATE_KEY = the treasury agent wallet key (TREASURY_AGENT_PRIVATE_KEY in .dev.vars).
+}
