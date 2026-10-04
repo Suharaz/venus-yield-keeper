@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.1 - 2026-10-04
+- Router exit-liquidity cap gets a hysteresis band (`KEEP_CASH_MULTIPLE` 2): new money up to market cash / 3, a placed position kept while it fits in cash / 2. Before, one borrow/repay swing in the thin Liquid Staked BNB pool could trigger ~5 txs (withdraw, unwrap, deposit, then back). Policy tests in `src/router/policy.test.ts` (`npm test`).
+
 ## 0.3.0 - 2026-10-04
 - Third agent: Venus Rate Router (ERC-8004 #2556, HelloFugu REBALANCING listing 25, Pokter Rebalancing, Souk requested). Routes BNB across Venus Core vBNB, Core vWBNB and the Liquid Staked BNB pool vWBNB by supply APY with per-market caps (60% of capital, cash / 3, supply cap) and hysteresis (3 APY points for 15 min, 1 point while hired).
 

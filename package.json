@@ -12,6 +12,7 @@
     "deploy:treasury": "wrangler deploy --config wrangler.treasury.jsonc",
     "deploy:router": "wrangler deploy --config wrangler.router.jsonc",
     "typecheck": "tsc --noEmit",
+    "test": "tsx --test src/router/policy.test.ts",
     "keygen": "tsx scripts/keygen.ts",
     "register": "tsx scripts/register.ts",
     "list:hellofugu": "tsx scripts/list-hellofugu.ts"

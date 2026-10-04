@@ -11,8 +11,8 @@ const profile: AgentProfile = {
   description:
     "Rebalancing agent (category: rebalancing) on BNB Smart Chain testnet. A portfolio rebalancer for BNB across three Venus lending markets " +
     "(Core vBNB, Core vWBNB, Liquid Staked BNB pool vWBNB): it ranks them by live supply APY and rebalances the allocation toward the best yield, " +
-    "capping each market at 60% of capital and at one third of its withdrawable cash, and respecting supply caps and pauses. " +
-    "Hysteresis: a new leader must beat the current one by 3 APY points for 15 minutes before any rebalance (1 point while hired), so noise never moves funds. " +
+    "capping each market at 60% of capital and at one third of its withdrawable cash (kept until it exceeds one half, so one borrower cannot churn it), and respecting supply caps and pauses. " +
+    "Hysteresis: a new leader must beat the current one by 3 APY points for 15 minutes before any rebalance (1 point while hired), so rate noise never moves funds. " +
     "Wraps and unwraps BNB as needed; every move is an onchain transaction with its reason recorded. " +
     "Hire it on HelloFugu or Pokter; ask it (A2A message/send) for the allocation, blended APY and its edge over a single market.",
   version: "0.1.0",
@@ -30,7 +30,7 @@ const profile: AgentProfile = {
     rules: [
       "Capital = wallet BNB above a 0.01 BNB gas reserve + WBNB + BNB supplied to the three Venus markets.",
       "A market is eligible when mint is open and APY is at least 1%.",
-      "Per-market cap = min(60% of capital, its cash / 3 so exits stay liquid, supply-cap room).",
+      "Per-market cap = min(60% of capital, exit-liquidity limit, supply-cap room). Exit limit: add only up to cash / 3; keep a placed position while it fits in cash / 2, so one borrow or repay does not churn funds.",
       "Fill markets best APY first up to their cap; the rest stays liquid.",
       "Re-rank only when a new leader beats the current one by 3 APY points for 15 min (1 point while hired); re-rank at once if the leader becomes ineligible.",
       "Each cycle takes one step: withdraw excess, convert BNB/WBNB, approve, or deposit.",

@@ -23,7 +23,8 @@
     "MIN_APY_BPS": "100",
     "BAND_BPS": "500",
     "MIN_MOVE_WEI": "2000000000000000",
-    "EXIT_CASH_MULTIPLE": "3"
+    "EXIT_CASH_MULTIPLE": "3",
+    "KEEP_CASH_MULTIPLE": "2"
   }
   // Secret (not in this file): AGENT_PRIVATE_KEY = the router agent wallet key (ROUTER_AGENT_PRIVATE_KEY in .dev.vars).
 }

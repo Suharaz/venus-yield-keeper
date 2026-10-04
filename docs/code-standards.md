@@ -7,4 +7,4 @@
 - KV state goes through `loadDoc` (write only on change): stay far below the Workers Free cap of 1000 writes/day.
 - Shared behaviour lives in `src/shared`; an agent is an `AgentModule` (profile, runCycle, report, summary, sections).
 - Secrets only via `.dev.vars` / Worker secrets / `.env`; all gitignored. Never log keys.
-- Check: `npm run typecheck`.
+- Check: `npm run typecheck` and `npm test` (router policy: borrow/repay swings, hurdle + confirm window, cash-capped withdrawals, gas reserve).

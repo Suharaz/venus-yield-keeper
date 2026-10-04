@@ -32,7 +32,7 @@ and records every onchain action with the reason it was taken.
 
 **Venus Rate Router** ([`src/router/policy.ts`](src/router/policy.ts)) rebalances BNB across three Venus markets for the same asset (Core vBNB, Core vWBNB, Liquid Staked BNB isolated pool vWBNB), so a move never needs a swap:
 - Capital = wallet BNB above a 0.01 BNB gas reserve + WBNB + BNB supplied to the three markets.
-- A market is eligible when mint is open and supply APY is at least 1%. Per-market cap = min(60% of capital, market cash / 3 so exits stay liquid, supply-cap room).
+- A market is eligible when mint is open and supply APY is at least 1%. Per-market cap = min(60% of capital, exit-liquidity limit, supply-cap room). Exit limit has a band: new money only up to market cash / 3, a placed position is kept while it fits in cash / 2 (only the part above is cut), so one borrow/repay swing does not churn funds. It bounds, not removes, lockup risk: if a borrower drains a market's cash to ~0, withdrawals from it wait for repayment.
 - Fill markets best APY first up to their cap; the rest stays liquid.
 - Hysteresis: a new leader must beat the committed one by 3 APY points for 15 minutes before funds move (1 point while hired). A leader that turns ineligible (paused, APY floor) is replaced at once.
 - One step per cycle: withdraw excess (`redeemUnderlying`, or `redeem` all), `WBNB.deposit`/`withdraw`, `approve`, then `mint`. Core-pool soft failures are caught by checking the vToken balance after the receipt.

@@ -17,6 +17,7 @@ export interface RouterEnv extends BaseEnv {
   BAND_BPS: string;
   MIN_MOVE_WEI: string;
   EXIT_CASH_MULTIPLE: string;
+  KEEP_CASH_MULTIPLE: string;
 }
 
 interface VenueConfig {
@@ -76,6 +77,7 @@ function params(env: RouterEnv): RouterParams {
     bandBps: BigInt(env.BAND_BPS),
     minMoveWei: BigInt(env.MIN_MOVE_WEI),
     exitCashMultiple: BigInt(env.EXIT_CASH_MULTIPLE),
+    keepCashMultiple: BigInt(env.KEEP_CASH_MULTIPLE),
   };
 }
 

@@ -3,7 +3,12 @@
  * from the inputs recorded next to its transaction.
  *
  * Capacity of a venue = 0 if mint is paused or APY < floor, else
- *   min(concentration cap, venue cash / exit-liquidity multiple, supply-cap headroom + our position).
+ *   min(concentration cap, exit-liquidity limit, supply-cap headroom + our position).
+ * Exit-liquidity limit has its own hysteresis band, so one borrower moving the market's cash
+ * does not churn funds: new money only up to cash / exitCashMultiple (3), but a position already
+ * placed is kept while it stays within cash / keepCashMultiple (2), and only the part above that is cut.
+ * It limits how much can be stuck, not whether: a borrower who drains cash to ~0 blocks every
+ * withdrawal until repayment (withdrawals are capped by cash).
  * Allocation: walk the committed ranking (best APY first) and fill each venue up to its capacity;
  * what is left stays liquid.
  * Ranking commits (hysteresis, so noise never moves funds):
@@ -42,6 +47,7 @@ export interface RouterParams {
   bandBps: bigint;
   minMoveWei: bigint;
   exitCashMultiple: bigint;
+  keepCashMultiple: bigint;
 }
 
 export interface Candidate {
@@ -83,7 +89,9 @@ const min = (...xs: bigint[]) => xs.reduce((a, b) => (b < a ? b : a));
 
 export function capacityWei(p: RouterParams, v: Venue, capitalWei: bigint): bigint {
   if (v.mintPaused || v.apyBps < p.minApyBps) return 0n;
-  return min((capitalWei * p.maxShareBps) / BPS, v.cashWei / p.exitCashMultiple, v.capHeadroomWei + v.positionWei);
+  const fill = v.cashWei / p.exitCashMultiple;
+  const keep = min(v.positionWei, v.cashWei / p.keepCashMultiple);
+  return min((capitalWei * p.maxShareBps) / BPS, fill > keep ? fill : keep, v.capHeadroomWei + v.positionWei);
 }
 
 export function planRouter(p: RouterParams, s: RouterSnapshot): RouterPlan {
