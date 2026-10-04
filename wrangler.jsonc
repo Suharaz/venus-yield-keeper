@@ -7,8 +7,7 @@
   "observability": { "enabled": true },
   // Every 5 minutes: complete finished HelloFugu hires, then apply the yield rule.
   "triggers": { "crons": ["*/5 * * * *"] },
-  // No id: Wrangler provisions the namespace on first deploy.
-  "kv_namespaces": [{ "binding": "STATE" }],
+  "kv_namespaces": [{ "binding": "STATE", "id": "adc3813cafd54e619f1245b5fd798d39" }],
   "vars": {
     "RPC_URL": "https://bsc-testnet-rpc.publicnode.com",
     // Fill after `npm run register` / `npm run list:hellofugu`; empty = not yet registered/listed.
